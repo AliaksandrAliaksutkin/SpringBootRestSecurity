@@ -1,17 +1,9 @@
 package org.example.springbootrestsecurity.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
+
+import lombok.*;
 
 import javax.persistence.*;
-import java.util.Collection;
-import java.util.List;
-
 
 @Setter
 @Getter
@@ -19,9 +11,10 @@ import java.util.List;
 @AllArgsConstructor
 @Table(name = "users")
 @Entity
-public class User implements UserDetails {
+public class User {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    // Определяет простой первичный ключ, состоящий из одного поля;
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)     //автоматическая генерация значения первичного ключа
     @Column(name = "id_user")
     private Long id;
     @Column(name = "first_name")
@@ -38,8 +31,7 @@ public class User implements UserDetails {
     @Enumerated(value = EnumType.STRING)
     @Column(name = "status")
     private Status status;
-    private final List<SimpleGrantedAuthority> authorities;
-    private final boolean isActive;
+
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "id_address_user")
     private Address address;
@@ -88,59 +80,5 @@ public class User implements UserDetails {
                 ", lastName='" + lastName + '\'' +
                 ", age=" + age +
                 '}';
-    }
-
-    public User(String username, String password, List<SimpleGrantedAuthority> authorities, boolean isActive) {
-        this.firstName = username;
-        this.password = password;
-        this.authorities = authorities;
-        this.isActive = isActive;
-    }
-
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return authorities;
-    }
-
-    @Override
-    public String getPassword() {
-        return password;
-    }
-
-    @Override
-    public String getUsername() {
-        return firstName;
-    }
-
-    @Override
-    public boolean isAccountNonExpired() {
-        return isActive;
-    }
-
-    @Override
-    public boolean isAccountNonLocked() {
-        return isActive;
-    }
-
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return isActive;
-    }
-
-    @Override
-    public boolean isEnabled() {
-        return isActive;
-    }
-    /*метод для преобразования сущности юзера в юзера понятного для секьюрити*/
-
-    public static UserDetails fromUser(User user) {
-        return new org.springframework.security.core.userdetails.User(
-                user.getFirstName(), user.getPassword(),
-                user.getStatus().equals(Status.ACTIVE),
-                user.getStatus().equals(Status.ACTIVE),
-                user.getStatus().equals(Status.ACTIVE),
-                user.getStatus().equals(Status.ACTIVE),
-                user.getRole().getAuthorities()
-        );
     }
 }

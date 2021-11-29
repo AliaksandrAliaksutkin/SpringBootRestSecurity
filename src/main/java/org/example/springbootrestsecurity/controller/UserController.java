@@ -41,7 +41,7 @@ public class UserController {
 
     @PostMapping("allusers")
     @PreAuthorize("hasAnyAuthority('users:write')")
-    public String editUser(@RequestParam(required = false) Long id,
+    public String editUser(@RequestParam(required = false) Long id, /*Конструкция require=false сообщает фреймворку о том, что наличие соответствующего bean'а не является обязательным при компиляции программы.*/
                            @RequestParam String firstName,
                            @RequestParam String lastName,
                            @RequestParam Integer age,
@@ -53,7 +53,7 @@ public class UserController {
                            @RequestParam(name = "address.house") Integer house) {
 
         String encryptedPassword = passwordEncoder.encode(password);
-        User user = new User(id, firstName, lastName, age, encryptedPassword, role, status, new Address(city, street, house));
+        User user = new User(id, firstName, lastName, age, encryptedPassword,role,status,new Address(city, street, house));
         userService.save(user);
 
         return "redirect:/homepage";

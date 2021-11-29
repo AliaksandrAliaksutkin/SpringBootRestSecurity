@@ -2,9 +2,12 @@ package org.example.springbootrestsecurity.service;
 
 import lombok.RequiredArgsConstructor;
 
+import org.example.springbootrestsecurity.controller.UserController;
 import org.example.springbootrestsecurity.exception.NoEntityException;
 import org.example.springbootrestsecurity.model.User;
 import org.example.springbootrestsecurity.repository.UserRepository;
+import org.example.springbootrestsecurity.security.SecurityUser;
+import org.springframework.security.core.userdetails.UserCache;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -47,7 +50,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     public UserDetails loadUserByUsername(String firstName) throws UsernameNotFoundException {
         User user = userRepository.findByFirstName(firstName).orElseThrow(() ->
                 new UsernameNotFoundException("Пользователь не обнаружен"));
-        return User.fromUser(user);
+        return SecurityUser.fromUser(user);
     }
 
 }
