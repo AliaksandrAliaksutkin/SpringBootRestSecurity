@@ -1,2 +1,15 @@
-package org.example.springbootrestsecurity.model;public class Permission {
+package org.example.springbootrestsecurity.model;
+
+import lombok.Getter;
+
+@Getter
+public enum Permission {
+    USERS_READ("users:read"),
+    USERS_WRITE("users:write");
+
+    private final String permission;
+
+    Permission(String permission) {
+        this.permission = permission;
+    }
 }

@@ -1,2 +1,6 @@
-package org.example.springbootrestsecurity.model;public class Status {
+package org.example.springbootrestsecurity.model;
+
+public enum Status {
+    ACTIVE,
+    BANNED
 }
