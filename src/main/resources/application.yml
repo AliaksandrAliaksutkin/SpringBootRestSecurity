@@ -9,3 +9,11 @@ spring:
     show-sql: true
     hibernate:
       ddl-auto: update
+key:
+  name: lobz1k
+
+header:
+  name: Authorization
+
+expiration:
+  seconds: 604800

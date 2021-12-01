@@ -3,6 +3,7 @@ package org.example.springbootrestsecurity.model;
 import lombok.*;
 
 import javax.persistence.*;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Setter
