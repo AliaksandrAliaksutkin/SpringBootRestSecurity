@@ -14,10 +14,11 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 @RequiredArgsConstructor
 @EnableWebSecurity
-@EnableGlobalMethodSecurity(prePostEnabled = true,securedEnabled = true)
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final JwtConfigurer jwtConfigurer;
+
 
     @Override
     protected void configure(final HttpSecurity http) throws Exception {

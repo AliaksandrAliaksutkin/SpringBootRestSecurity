@@ -4,11 +4,15 @@ spring:
     password: 821252
     username: dbspring
     url: jdbc:postgresql://localhost:5432/dbspring
+  main:
+    allow-circular-references: true
   jpa:
     database: postgresql
     show-sql: true
     hibernate:
       ddl-auto: update
+
+
 key:
   name: lobz1k
 
