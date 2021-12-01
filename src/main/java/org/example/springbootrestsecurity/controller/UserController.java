@@ -34,7 +34,7 @@ public class UserController {
     }
 
     @Secured("hasAnyAuthority('users:write')")
-    @GetMapping(value = "new")
+    @PostMapping(value = "new")
     public void userCreate(@RequestBody User user) {
         userService.save(user);
     }

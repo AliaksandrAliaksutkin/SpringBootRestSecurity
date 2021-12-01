@@ -36,8 +36,9 @@ public class JwtTokenProvider {
     }
 
     //todo метод создания токена на основании данных которые передаем
-    public String createToken(String firstName, String role) {
+    public String createToken(String firstName,String lastName, String role) {
         Claims claims = Jwts.claims().setSubject(firstName);                         //todo посмотри, что такое Claims
+        claims.put("lastName", lastName);
         claims.put("role", role);                                                   //todo claims-это некая мапа в которую мы можем помещать кастомные поля, которые нам необходимы
         Date now = new Date();                                                      //todo указываем когда этот токен был создан, и когда будет зареспайнен
         Date validity = new Date(now.getTime() + validityInMilliseconds * 1000);    //todo милисекунды умножаем на 1000, получаем в секундах время

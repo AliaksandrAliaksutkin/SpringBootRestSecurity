@@ -8,6 +8,7 @@ import org.example.springbootrestsecurity.security.SecurityUser;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,11 +19,14 @@ import java.util.List;
 public class UserServiceImpl implements UserService, UserDetailsService {
 
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
     @Transactional
     @Override
-    public User save(User user) {
-        return userRepository.save(user);
+    public void save(User user) {
+        String password = user.getPassword();
+        user.setPassword(passwordEncoder.encode(password));
+        userRepository.save(user);
     }
 
     @Transactional

@@ -22,7 +22,7 @@ import java.util.Map;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/")
+@RequestMapping("/auth")
 public class AuthenticationRestControllerV1 {
 
     private final AuthenticationManager authenticationManager;
@@ -34,7 +34,7 @@ public class AuthenticationRestControllerV1 {
         try {
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getFirstName(), request.getPassword()));
             User user = userRepository.findByFirstName(request.getFirstName()).orElseThrow(() -> new UsernameNotFoundException("User doesn't exists"));
-            String token = jwtTokenProvider.createToken(request.getFirstName(), user.getRole().name());
+            String token = jwtTokenProvider.createToken(request.getFirstName(), user.getLastName(), user.getRole().name()); //todo ??
             Map<Object, Object> response = new HashMap<>();
             response.put("firstName", request.getFirstName());
             response.put("token", token);

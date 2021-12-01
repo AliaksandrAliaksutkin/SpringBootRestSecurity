@@ -8,7 +8,7 @@ import java.util.List;
 public interface UserService {
     List<User> getAllUsers();
 
-    User save(User user);
+    void save(User user);
 
     User getById(Long id) throws NoEntityException;
 
