@@ -14,12 +14,9 @@ spring:
     hibernate:
       ddl-auto: update
 
-
-key:
-  name: lobz1k
-
-header:
-  name: Authorization
-
-expiration:
-  seconds: 604800
+jwt:
+  secretKey: lobz1k
+  header: Authorization
+  expiration: 604800
+#server:
+#  port: 8080
