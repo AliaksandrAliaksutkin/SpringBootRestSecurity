@@ -13,8 +13,7 @@ import javax.persistence.*;
 @Entity
 public class User {
     @Id
-    // Определяет простой первичный ключ, состоящий из одного поля;
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)     //автоматическая генерация значения первичного ключа
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "id_user")
     private Long id;
     @Column(name = "first_name")

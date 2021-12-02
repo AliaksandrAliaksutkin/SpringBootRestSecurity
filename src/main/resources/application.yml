@@ -18,5 +18,3 @@ jwt:
   secretKey: lobz1k
   header: Authorization
   expiration: 604800
-#server:
-#  port: 8080
