@@ -28,6 +28,10 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         user.setPassword(passwordEncoder.encode(password));
         userRepository.save(user);
     }
+    @Override
+    public User update (User user) {
+        return userRepository.save(user);
+    }
 
     @Transactional
     @Override

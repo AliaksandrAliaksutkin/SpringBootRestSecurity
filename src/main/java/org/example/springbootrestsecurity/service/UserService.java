@@ -12,6 +12,8 @@ public interface UserService {
 
     User getById(Long id) throws NoEntityException;
 
+    User update(User user);
+
     void deleteById(Long id);
 
 }
