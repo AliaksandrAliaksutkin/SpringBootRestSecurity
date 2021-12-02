@@ -46,6 +46,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     public User getById(Long id) throws NoEntityException {
         return userRepository.findById(id).orElseThrow(() -> new NoEntityException(id));
     }
+
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         User user = userRepository.findByFirstName(email).orElseThrow(() ->

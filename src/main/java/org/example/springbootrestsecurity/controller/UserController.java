@@ -23,8 +23,8 @@ public class UserController {
 
     @Secured("hasAnyAuthority('users:write')")
     @GetMapping("/address/{id}")
-    public Address getAddress(@PathVariable Long id) throws NoEntityException {
-        return userService.getById(id).getAddress();
+    public Address getAddress(@PathVariable Long id) throws NoEntityException { //todo @PathVariable, способ передачи параметров запроса — в виде частей адреса запроса, используется
+        return userService.getById(id).getAddress();                            //todo для работы с параметрами, передаваемыми через адрес запроса в Spring WebMVCпш
     }
 
     @Secured("hasAnyAuthority('users:write')")
