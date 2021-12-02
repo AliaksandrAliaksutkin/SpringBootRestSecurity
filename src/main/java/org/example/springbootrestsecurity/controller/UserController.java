@@ -15,7 +15,7 @@ import java.util.List;
 public class UserController {
     private final UserService userService;
 
-    @Secured(value = {"hasAnyAuthority('users:read')"})
+    @Secured("hasAnyAuthority('users:read')")
     @GetMapping("/homepage")
     public List<User> viewHomePage() {
         return userService.getAllUsers();
