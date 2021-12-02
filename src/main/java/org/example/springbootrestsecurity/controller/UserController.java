@@ -12,6 +12,7 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
+@RequestMapping("/users")
 public class UserController {
     private final UserService userService;
 
@@ -40,7 +41,7 @@ public class UserController {
     }
 
     @Secured("hasAnyAuthority('users:write')")
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping(value = "/delete/{id}")
     public void delete(@PathVariable Long id) {
         userService.deleteById(id);
     }

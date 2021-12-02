@@ -21,9 +21,8 @@ public class Address {
     private String street;
     @Column(name = "house")
     private Integer house;
-    @OneToOne(mappedBy = "address", orphanRemoval = true)
-    private User user;
-
+//    @OneToOne(mappedBy = "address", orphanRemoval = true)
+//    private User user;
     public Address(String city, String street, Integer house) {
         this.city = city;
         this.street = street;
