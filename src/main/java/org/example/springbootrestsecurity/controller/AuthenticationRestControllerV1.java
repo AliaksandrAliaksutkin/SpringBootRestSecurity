@@ -36,7 +36,7 @@ public class AuthenticationRestControllerV1 {
             User user = userRepository.findByEmail(request.getEmail()).orElseThrow(() -> new UsernameNotFoundException("User doesn't exists"));
             String token = jwtTokenProvider.createToken(request.getEmail(), user.getRole().name());
             Map<Object, Object> response = new HashMap<>();
-            response.put("email", request.getEmail());
+            response.put("email", request.getEmail());//todo ты меня немного не понял, в ответе должен быть отлько токен. а в самом токене email
             response.put("token", token);
             return ResponseEntity.ok(response);
         } catch (Exception e) {
