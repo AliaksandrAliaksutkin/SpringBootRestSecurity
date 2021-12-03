@@ -1,7 +1,6 @@
 package org.example.springbootrestsecurity.model;
 
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -25,14 +24,16 @@ public class User implements UserDetails {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "id_user")
     private Long id;
+    @Column(name = "email")
+    private String email;
+    @Column(name = "password")
+    private String password;
     @Column(name = "first_name")
     private String firstName;
     @Column(name = "last_name")
     private String lastName;
     @Column(name = "age")
     private Integer age;
-    @Column(name = "password")
-    private String password;
     @Enumerated(value = EnumType.STRING)
     @Column(name = "role")
     private Role role;
@@ -50,7 +51,8 @@ public class User implements UserDetails {
         this.age = age;
     }
 
-    public User(String firstName, String lastName, Integer age, String password, Role role, Status status, Address address) {
+    public User(String email, String firstName, String lastName, Integer age, String password, Role role, Status status, Address address) {
+        this.email = email;
         this.firstName = firstName;
         this.lastName = lastName;
         this.age = age;
@@ -60,7 +62,8 @@ public class User implements UserDetails {
         this.address = address;
     }
 
-    public User(String firstName, String lastName, Integer age, String password, Role role, Status status) {
+    public User(String email,String firstName, String lastName, Integer age, String password, Role role, Status status) {
+        this.email = email;
         this.firstName = firstName;
         this.lastName = lastName;
         this.age = age;
@@ -69,8 +72,9 @@ public class User implements UserDetails {
         this.status = status;
     }
 
-    public User(Long id, String firstName, String lastName, Integer age, String password, Role role, Status status) {
+    public User(Long id, String email, String firstName, String lastName, Integer age, String password, Role role, Status status) {
         this.id = id;
+        this.email = email;
         this.firstName = firstName;
         this.lastName = lastName;
         this.age = age;
@@ -83,6 +87,7 @@ public class User implements UserDetails {
     public String toString() {
         return "User{" +
                 "id=" + id +
+                ", email='" + email + '\'' +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", age=" + age +
@@ -128,7 +133,7 @@ public class User implements UserDetails {
 
     public static UserDetails fromUser(User user) {
         return new org.springframework.security.core.userdetails.User(
-                user.getFirstName(), user.getPassword(),
+                user.getEmail(), user.getPassword(),
                 user.getStatus().equals(Status.ACTIVE),
                 user.getStatus().equals(Status.ACTIVE),
                 user.getStatus().equals(Status.ACTIVE),

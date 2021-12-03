@@ -32,15 +32,15 @@ public class AuthenticationRestControllerV1 {
     @PostMapping("/login")
     public ResponseEntity<?> authenticate(@RequestBody AuthenticationRequestDTO request) {
         try {
-            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getFirstName(), request.getPassword()));
-            User user = userRepository.findByFirstName(request.getFirstName()).orElseThrow(() -> new UsernameNotFoundException("User doesn't exists"));
-            String token = jwtTokenProvider.createToken(request.getFirstName(), user.getRole().name());
+            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword()));
+            User user = userRepository.findByEmail(request.getEmail()).orElseThrow(() -> new UsernameNotFoundException("User doesn't exists"));
+            String token = jwtTokenProvider.createToken(request.getEmail(), user.getRole().name());
             Map<Object, Object> response = new HashMap<>();
-            response.put("firstName", request.getFirstName());
+            response.put("email", request.getEmail());
             response.put("token", token);
             return ResponseEntity.ok(response);
         } catch (Exception e) {
-            return new ResponseEntity<>("Invalid username/password combination", HttpStatus.UNAUTHORIZED);
+            return new ResponseEntity<>("Invalid email/password combination", HttpStatus.UNAUTHORIZED);
         }
     }
 

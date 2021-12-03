@@ -12,13 +12,13 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/users")
+
 public class UserController {
     private final UserService userService;
 
     @PreAuthorize("hasAnyAuthority('users:read')")
-    @GetMapping("/homepage")
-    public List<User> viewHomePage() {
+    @GetMapping("/users")
+    public List<User> viewAllUsers() {
         return userService.getAllUsers();
     }
 
