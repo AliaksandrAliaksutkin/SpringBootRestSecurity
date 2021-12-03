@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.example.springbootrestsecurity.model.User;
 import org.example.springbootrestsecurity.repository.UserRepository;
 import org.example.springbootrestsecurity.security.JwtTokenProvider;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -20,6 +21,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
 import java.util.Map;
 
+//@EnableAutoConfiguration
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/auth")
