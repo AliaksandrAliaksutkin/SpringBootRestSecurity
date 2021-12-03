@@ -4,7 +4,6 @@ import lombok.RequiredArgsConstructor;
 import org.example.springbootrestsecurity.exception.NoEntityException;
 import org.example.springbootrestsecurity.model.User;
 import org.example.springbootrestsecurity.repository.UserRepository;
-import org.example.springbootrestsecurity.security.SecurityUser;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -55,7 +54,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         User user = userRepository.findByFirstName(email).orElseThrow(() ->
                 new UsernameNotFoundException("User doesn't exists"));
-        return SecurityUser.fromUser(user);
+        return User.fromUser(user);
     }
 
 

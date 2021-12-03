@@ -1,9 +1,15 @@
 package org.example.springbootrestsecurity.model;
 
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import java.util.Collection;
 
 @Setter
 @Getter
@@ -11,7 +17,7 @@ import javax.persistence.*;
 @AllArgsConstructor
 @Table(name = "users")
 @Entity
-public class User {
+public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "id_user")
@@ -30,7 +36,10 @@ public class User {
     @Enumerated(value = EnumType.STRING)
     @Column(name = "status")
     private Status status;
+    private  boolean isActive;
 
+//    private  List<SimpleGrantedAuthority> authorities;
+    
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "id_address_user")
     private Address address;
@@ -71,7 +80,7 @@ public class User {
         this.status = status;
     }
 
-    @Override
+        @Override
     public String toString() {
         return "User{" +
                 "id=" + id +
@@ -79,5 +88,53 @@ public class User {
                 ", lastName='" + lastName + '\'' +
                 ", age=" + age +
                 '}';
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return role.getAuthorities();
+    }
+
+    @Override
+    public String getPassword() {
+        return password;
+    }
+
+    @Override
+    public String getUsername() {
+        return firstName;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return isActive;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return isActive;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return isActive;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return isActive;
+    }
+
+    /*метод для преобразования сущности юзера в юзера понятного для секьюрити*/
+
+    public static UserDetails fromUser(User user) {
+        return new org.springframework.security.core.userdetails.User(
+                user.getFirstName(), user.getPassword(),
+                user.getStatus().equals(Status.ACTIVE),
+                user.getStatus().equals(Status.ACTIVE),
+                user.getStatus().equals(Status.ACTIVE),
+                user.getStatus().equals(Status.ACTIVE),
+                user.getRole().getAuthorities()
+        );
     }
 }
