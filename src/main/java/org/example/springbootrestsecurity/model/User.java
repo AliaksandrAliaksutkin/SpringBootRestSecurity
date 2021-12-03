@@ -1,14 +1,17 @@
 package org.example.springbootrestsecurity.model;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Collection;
 
 @Setter
@@ -16,6 +19,7 @@ import java.util.Collection;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "users")
+@JsonIgnoreProperties(value = {"hibernateLazyInitializer", "handler"}, ignoreUnknown = true)
 @Entity
 public class User implements UserDetails {
     @Id
@@ -36,12 +40,9 @@ public class User implements UserDetails {
     @Enumerated(value = EnumType.STRING)
     @Column(name = "status")
     private Status status;
-    private  boolean isActive;
-
-//    private  List<SimpleGrantedAuthority> authorities;
     
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "id_address_user")
+//    @JoinColumn(name = "id_address_user")
     private Address address;
 
     public User(Long id, String firstName, String lastName, Integer age) {
@@ -92,7 +93,7 @@ public class User implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return role.getAuthorities();
+        return new ArrayList<SimpleGrantedAuthority>();
     }
 
     @Override
@@ -107,34 +108,34 @@ public class User implements UserDetails {
 
     @Override
     public boolean isAccountNonExpired() {
-        return isActive;
+        return true;
     }
 
     @Override
     public boolean isAccountNonLocked() {
-        return isActive;
+        return true;
     }
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return isActive;
+        return true;
     }
 
     @Override
     public boolean isEnabled() {
-        return isActive;
+        return true;
     }
 
     /*метод для преобразования сущности юзера в юзера понятного для секьюрити*/
 
-    public static UserDetails fromUser(User user) {
-        return new org.springframework.security.core.userdetails.User(
-                user.getFirstName(), user.getPassword(),
-                user.getStatus().equals(Status.ACTIVE),
-                user.getStatus().equals(Status.ACTIVE),
-                user.getStatus().equals(Status.ACTIVE),
-                user.getStatus().equals(Status.ACTIVE),
-                user.getRole().getAuthorities()
-        );
-    }
+//    public static UserDetails fromUser(User user) {
+//        return new org.springframework.security.core.userdetails.User(
+//                user.getFirstName(), user.getPassword(),
+//                user.getStatus().equals(Status.ACTIVE),
+//                user.getStatus().equals(Status.ACTIVE),
+//                user.getStatus().equals(Status.ACTIVE),
+//                user.getStatus().equals(Status.ACTIVE),
+//                user.getRole().getAuthorities()
+//        );
+//    }
 }

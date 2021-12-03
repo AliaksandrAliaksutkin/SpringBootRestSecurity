@@ -1,7 +1,7 @@
 spring:
 
-#  main:
-#    allow-circular-references: true
+  main:
+    allow-circular-references: true
 
   datasource:
     driver-class-name: org.postgresql.Driver
@@ -14,7 +14,7 @@ spring:
     show-sql: true
     hibernate:
       ddl-auto: update
-
+    open-in-view: false
 jwt:
   secretKey: lobz1k
   header: Authorization
