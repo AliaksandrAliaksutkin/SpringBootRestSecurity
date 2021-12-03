@@ -40,7 +40,7 @@ public class AuthenticationRestControllerV1 {
             response.put("token", token);
             return ResponseEntity.ok(response);
         } catch (Exception e) {
-            return new ResponseEntity<>("Invalid username/password combination", HttpStatus.UNAUTHORIZED /*HttpStatus.FORBIDDEN*/);
+            return new ResponseEntity<>("Invalid username/password combination", HttpStatus.UNAUTHORIZED);
         }
     }
 

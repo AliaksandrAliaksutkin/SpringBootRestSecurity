@@ -19,7 +19,6 @@ import java.util.Collection;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "users")
-@JsonIgnoreProperties(value = {"hibernateLazyInitializer", "handler"}, ignoreUnknown = true)
 @Entity
 public class User implements UserDetails {
     @Id
@@ -40,9 +39,8 @@ public class User implements UserDetails {
     @Enumerated(value = EnumType.STRING)
     @Column(name = "status")
     private Status status;
-    
+
     @OneToOne(cascade = CascadeType.ALL)
-//    @JoinColumn(name = "id_address_user")
     private Address address;
 
     public User(Long id, String firstName, String lastName, Integer age) {
@@ -81,7 +79,7 @@ public class User implements UserDetails {
         this.status = status;
     }
 
-        @Override
+    @Override
     public String toString() {
         return "User{" +
                 "id=" + id +
