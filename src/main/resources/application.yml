@@ -1,8 +1,5 @@
 spring:
 
-  main:
-    allow-circular-references: true
-
   datasource:
     driver-class-name: org.postgresql.Driver
     password: 821252
@@ -14,10 +11,8 @@ spring:
     show-sql: true
     hibernate:
       ddl-auto: update
-    open-in-view: false
+
 jwt:
   secretKey: lobz1k
   header: Authorization
   expiration: 604800
-server:
-  port: 8081

@@ -128,14 +128,14 @@ public class User implements UserDetails {
 
     /*метод для преобразования сущности юзера в юзера понятного для секьюрити*/
 
-//    public static UserDetails fromUser(User user) {
-//        return new org.springframework.security.core.userdetails.User(
-//                user.getFirstName(), user.getPassword(),
-//                user.getStatus().equals(Status.ACTIVE),
-//                user.getStatus().equals(Status.ACTIVE),
-//                user.getStatus().equals(Status.ACTIVE),
-//                user.getStatus().equals(Status.ACTIVE),
-//                user.getRole().getAuthorities()
-//        );
-//    }
+    public static UserDetails fromUser(User user) {
+        return new org.springframework.security.core.userdetails.User(
+                user.getFirstName(), user.getPassword(),
+                user.getStatus().equals(Status.ACTIVE),
+                user.getStatus().equals(Status.ACTIVE),
+                user.getStatus().equals(Status.ACTIVE),
+                user.getStatus().equals(Status.ACTIVE),
+                user.getRole().getAuthorities()
+        );
+    }
 }
