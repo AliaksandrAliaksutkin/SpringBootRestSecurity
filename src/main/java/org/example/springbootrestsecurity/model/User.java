@@ -1,9 +1,17 @@
 package org.example.springbootrestsecurity.model;
 
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.Collection;
 
 @Setter
 @Getter
@@ -11,19 +19,21 @@ import javax.persistence.*;
 @AllArgsConstructor
 @Table(name = "users")
 @Entity
-public class User {
+public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "id_user")
     private Long id;
+    @Column(name = "email")
+    private String email;
+    @Column(name = "password")
+    private String password;
     @Column(name = "first_name")
     private String firstName;
     @Column(name = "last_name")
     private String lastName;
     @Column(name = "age")
     private Integer age;
-    @Column(name = "password")
-    private String password;
     @Enumerated(value = EnumType.STRING)
     @Column(name = "role")
     private Role role;
@@ -32,7 +42,6 @@ public class User {
     private Status status;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "id_address_user")
     private Address address;
 
     public User(Long id, String firstName, String lastName, Integer age) {
@@ -42,7 +51,8 @@ public class User {
         this.age = age;
     }
 
-    public User(String firstName, String lastName, Integer age, String password, Role role, Status status, Address address) {
+    public User(String email, String firstName, String lastName, Integer age, String password, Role role, Status status, Address address) {
+        this.email = email;
         this.firstName = firstName;
         this.lastName = lastName;
         this.age = age;
@@ -52,7 +62,8 @@ public class User {
         this.address = address;
     }
 
-    public User(String firstName, String lastName, Integer age, String password, Role role, Status status) {
+    public User(String email,String firstName, String lastName, Integer age, String password, Role role, Status status) {
+        this.email = email;
         this.firstName = firstName;
         this.lastName = lastName;
         this.age = age;
@@ -61,8 +72,9 @@ public class User {
         this.status = status;
     }
 
-    public User(Long id, String firstName, String lastName, Integer age, String password, Role role, Status status) {
+    public User(Long id, String email, String firstName, String lastName, Integer age, String password, Role role, Status status) {
         this.id = id;
+        this.email = email;
         this.firstName = firstName;
         this.lastName = lastName;
         this.age = age;
@@ -75,9 +87,58 @@ public class User {
     public String toString() {
         return "User{" +
                 "id=" + id +
+                ", email='" + email + '\'' +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", age=" + age +
                 '}';
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return new ArrayList<SimpleGrantedAuthority>();
+    }
+
+    @Override
+    public String getPassword() {
+        return password;
+    }
+
+    @Override
+    public String getUsername() {
+        return firstName;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
+
+    /*метод для преобразования сущности юзера в юзера понятного для секьюрити*/
+
+    public static UserDetails fromUser(User user) {
+        return new org.springframework.security.core.userdetails.User(
+                user.getEmail(), user.getPassword(),
+                user.getStatus().equals(Status.ACTIVE),
+                user.getStatus().equals(Status.ACTIVE),
+                user.getStatus().equals(Status.ACTIVE),
+                user.getStatus().equals(Status.ACTIVE),
+                user.getRole().getAuthorities()
+        );
     }
 }
